@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Truth Questions Game</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0a0e2a, #1a1f4b);
+            color: #e6e6ff;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .game-container {
+            width: 100%;
+            max-width: 500px;
+            background: linear-gradient(to bottom, #121740, #0f142e);
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+            border: 3px solid #ff4d6d;
+            position: relative;
+        }
+        
+        .header {
+            background: linear-gradient(to right, #ff4d6d, #ff758c);
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="10" cy="10" r="3" fill="rgba(255,255,255,0.2)"/><circle cx="30" cy="25" r="2" fill="rgba(255,255,255,0.2)"/><circle cx="70" cy="15" r="4" fill="rgba(255,255,255,0.2)"/><circle cx="85" cy="40" r="3" fill="rgba(255,255,255,0.2)"/></svg>');
+            opacity: 0.3;
+        }
+        
+        .title {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: white;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            letter-spacing: 1px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .subtitle {
+            font-size: 1rem;
+            color: #ffebf0;
+            margin-top: 5px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .categories {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            padding: 25px 20px;
+        }
+        
+        .category {
+            background: linear-gradient(to bottom right, #2d325c, #252a50);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            width: 140px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid #3a4070;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .category:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            border-color: #ff4d6d;
+        }
+        
+        .category-icon {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            color: #ff758c;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        
+        .category-title {
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+            color: #ffffff;
+        }
+        
+        .category-count {
+            font-size: 0.9rem;
+            color: #a5a7c5;
+        }
+        
+        .question-container {
+            padding: 30px 25px;
+            display: none;
+        }
+        
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .back-button {
+            background: #3a4070;
+            border: none;
+            color: #e6e6ff;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        
+        .back-button:hover {
+            background: #ff4d6d;
+            transform: scale(1.1);
+        }
+        
+        .current-category {
+            background: linear-gradient(to right, #ff4d6d, #ff758c);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        
+        .question-box {
+            background: linear-gradient(to bottom, #1e2344, #252a50);
+            border-radius: 15px;
+            padding: 25px;
+            min-height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            border: 2px solid #3a4070;
+            box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.3);
+            margin-bottom: 25px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .question-text {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            color: #ffffff;
+            font-weight: 500;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .question-box::before {
+            content: """"";
+            position: absolute;
+            top: 10px;
+            left: 15px;
+            font-size: 4rem;
+            color: rgba(255, 117, 140, 0.1);
+            font-family: Georgia, serif;
+            z-index: 1;
+        }
+        
+        .actions {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+        
+        .action-button {
+            flex: 1;
+            padding: 15px;
+            border-radius: 12px;
+            border: none;
+            font-weight: 700;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .forfeit {
+            background: linear-gradient(to right, #4a4f7a, #3a4070);
+            color: #c5c7e4;
+        }
+        
+        .completed {
+            background: linear-gradient(to right, #4cd964, #2ecc71);
+            color: white;
+        }
+        
+        .action-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .action-button:active {
+            transform: translateY(1px);
+        }
+        
+        .counter {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 0.9rem;
+            color: #a5a7c5;
+        }
+        
+        /* Effects */
+        .completed-effect {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 100;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+        }
+        
+        .confetti {
+            font-size: 3rem;
+            color: #ffeb3b;
+            position: absolute;
+            opacity: 0;
+        }
+        
+        .forfeit-effect {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 77, 109, 0.3);
+            pointer-events: none;
+            z-index: 100;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+        }
+        
+        .broken-heart {
+            font-size: 5rem;
+            color: #ff4d6d;
+            opacity: 0;
+            transform: scale(0.5);
+        }
+        
+        .footer {
+            padding: 15px;
+            text-align: center;
+            background: rgba(26, 31, 75, 0.7);
+            font-size: 0.8rem;
+            color: #7a7d9c;
+        }
+        
+        .progress-bar {
+            height: 6px;
+            background: #2d325c;
+            border-radius: 3px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+        
+        .progress {
+            height: 100%;
+            background: linear-gradient(to right, #ff4d6d, #ff758c);
+            border-radius: 3px;
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+        
+        @media (max-width: 480px) {
+            .categories {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .category {
+                width: 100%;
+                max-width: 300px;
+            }
+            
+            .actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <div class="header">
+            <h1 class="title">Truth Questions</h1>
+            <p class="subtitle">Deepen your connections through meaningful conversations</p>
+        </div>
+        
+        <div class="progress-bar">
+            <div class="progress" id="progress"></div>
+        </div>
+        
+        <div class="categories" id="categories">
+            <div class="category" data-category="general">
+                <div class="category-icon">👤</div>
+                <div class="category-title">General</div>
+                <div class="category-count">20 Questions</div>
+            </div>
+            
+            <div class="category" data-category="friend">
+                <div class="category-icon">👫</div>
+                <div class="category-title">Friend</div>
+                <div class="category-count">20 Questions</div>
+            </div>
+            
+            <div class="category" data-category="couple">
+                <div class="category-icon">💑</div>
+                <div class="category-title">Couple</div>
+                <div class="category-count">150+ Questions</div>
+            </div>
+        </div>
+        
+        <div class="question-container" id="question-container">
+            <div class="question-header">
+                <button class="back-button" id="back-button">←</button>
+                <div class="current-category" id="current-category">General</div>
+            </div>
+            
+            <div class="question-box">
+                <div class="question-text" id="question-text">
+                    What's your weirdest habit?
+                </div>
+            </div>
+            
+            <div class="actions">
+                <button class="action-button forfeit" id="forfeit-btn">
+                    <i class="fas fa-times"></i> Forfeited
+                </button>
+                <button class="action-button completed" id="completed-btn">
+                    <i class="fas fa-check"></i> Completed
+                </button>
+            </div>
+            
+            <div class="counter" id="counter">
+                Question 1 of 20
+            </div>
+        </div>
+        
+        <div class="completed-effect" id="completed-effect">
+            <!-- Confetti will be generated here -->
+        </div>
+        
+        <div class="forfeit-effect" id="forfeit-effect">
+            <div class="broken-heart">💔</div>
+        </div>
+        
+        <div class="footer">
+            Answer honestly to deepen your connections • Share your answers to spark conversations
+        </div>
+    </div>
+
+    <script>
+        // Questions database - ALL questions included as requested
+        const questions = {
+            general: [
+                "What’s your weirdest habit?",
+                "What’s something that always cheers you up?",
+                "What’s something simple that always makes you smile?",
+                "What’s one thing people often misunderstand about you?",
+                "Which season feels most like you?",
+                "Which time of day do you feel most like yourself?",
+                "What’s your zodiac sign and do you believe in it?",
+                "What’s your coffee or tea order when you’re treating yourself?",
+                "If I looked through your gallery, what kind of photos would I mostly find?",
+                "Do you overthink or underreact?",
+                "Do you consider yourself more romantic or logical?",
+                "Are you more mind-led or heart-led in most situations?",
+                "What’s a strange fact about you that most people don’t know?",
+                "Have you ever pretended to like something just to impress someone?",
+                "What’s something you’re embarrassed to admit you like?",
+                "What's something you secretly judge others for?",
+                "What’s something you wish you could unlearn from your childhood?",
+                "What were you like in school — quiet, popular, focused, misunderstood?",
+                "Did you ever feel out of place growing up? What caused that feeling?",
+                "What kind of emotional habits do you think you inherited from your family?"
+            ],
+            
+            friend: [
+                "What’s a green flag in a partner?",
+                "What makes you feel safe in a relationship?",
+                "What kind of emotional support do you appreciate the most?",
+                "Do you believe people deserve second chances?",
+                "How do you usually handle misunderstandings?",
+                "What’s a boundary that’s non-negotiable for you?",
+                "How long does it take for you to trust someone?",
+                "What’s a communication habit you’re working on?",
+                "Do you like random check-ins from someone who cares?",
+                "What does \"being seen\" in a relationship look like for you?",
+                "What kind of emotional support do you wish you’d had in the past?",
+                "What role do you often find yourself playing in relationships?",
+                "What does it feel like when someone chooses you without you having to convince them?",
+                "What does it feel like when someone gives without asking for anything back?",
+                "What kind of messages make you smile when you least expect it?",
+                "How do you show someone they matter when words aren’t enough?",
+                "How do you personally define loyalty?",
+                "What does it feel like when someone wants you without asking you to prove your worth?",
+                "Have you ever opened up to someone and regretted it?",
+                "Would you rather be comforted or left alone when you're upset?"
+            ],
+            
+            couple: [
+                "If I stop giving first, would you reach out at all?",
+                "Do you think I ask for too much—or just more than you’re ready to give?",
+                "When was the last time you doubted whether you deserved this connection?",
+                "What do you hope I never stop believing about you?",
+                "What’s the hardest thing about being liked by someone like me?",
+                "What do you tell yourself when I stay even after being hurt?",
+                "When you go quiet, are you hoping I’ll stop trying or keep trying harder?",
+                "What’s the hardest thing about being wanted by someone so consistent?",
+                "Do you feel like I love a version of you that only exists in my head?",
+                "Have you ever thought, “I want this,” and sabotaged it anyway?",
+                "When I don’t reach out, do you wonder if I’m finally giving up?",
+                "What does it mean to you when someone stays even when you disappear?",
+                "What emotion do you run from the most when we get close?",
+                "Have you ever cried for me without letting me know?",
+                "What’s something I do that makes you believe I’ll always stay?",
+                "What kind of reassurance do you secretly crave but can’t ask for?",
+                "What would it take for you to believe I won’t abandon you?",
+                "Do you worry I’ll stop seeing the best in you eventually?",
+                "Do you feel like you have to lose me before realizing you want me?",
+                "Do you think there’s still hope for us, even now?",
+                "Do you wish I’d just give up already, or does the thought of that break something in you?",
+                "What makes you think history will repeat itself with me?",
+                "When I’m kind to you, do you wonder what I secretly want in return?",
+                "Do you fear I’ll one day say the same words that broke you?",
+                "Do you like clingy or independent partners?",
+                "How often do you like spending time with your partner?",
+                "How important is physical intimacy to you in a relationship?",
+                "Do you think fighting sometimes is normal in a relationship?",
+                "What makes you feel most loved in a relationship?",
+                "Are you the jealous or protective type?",
+                "Do you still have any photos or messages from an ex?",
+                "What’s something you need to feel secure in a relationship?",
+                "What do you think makes a relationship last?",
+                "If we had a couple nickname, what would it be?",
+                "What song reminds you of us?",
+                "What kind of cute couple habits do you secretly want to do with me?",
+                "What would our matching outfits look like?",
+                "What’s something you’ve never told anyone before?",
+                "Have you ever been scared to fall for someone?",
+                "What’s something about love you’ve only recently learned?",
+                "What scares you the most about relationships?",
+                "What are you most afraid of losing in love?",
+                "What’s something your past relationships taught you?",
+                "Do you think you fall fast or slow?",
+                "What kind of romantic gestures do you secretly love?",
+                "Do you believe in taking breaks in relationships?",
+                "Are you more likely to overthink or go with the flow?",
+                "Do you prefer to talk things out immediately or take space first?",
+                "What’s one fear you have in relationships?",
+                "What’s a relationship red flag you only learned to recognize later?",
+                "Would you tell your partner everything, even past mistakes?",
+                "Do you like being held or holding someone more?",
+                "What’s one soft thing I do that melts you?",
+                "What moment with me have you replayed in your head?",
+                "What nickname would you secretly love to be called?",
+                "How do you feel about PDA?",
+                "What’s something you’d only do for someone special?",
+                "What’s the most comforting thing a partner could do for you?",
+                "Do you prefer handwritten letters or surprise voice notes?",
+                "What kind of compliments hit you the hardest?",
+                "How do you act when you like someone but don’t know if they like you back?",
+                "What kind of text message do you save and reread?",
+                "Do you like matching things? If yes, what and why?",
+                "What kind of nicknames would you want someone to call you?",
+                "How do you express care without saying a word?",
+                "Would you rather hold someone’s hand or hear them talk for hours?",
+                "What’s your love language?",
+                "How do you usually express affection?",
+                "How do you handle stress or conflict in a relationship?",
+                "Have you been in love before?",
+                "What’s one thing you noticed about me that you liked right away?",
+                "When did you realize you liked me?",
+                "Did you stalk any of my socials before we started talking?",
+                "What’s your favorite thing about how I look?",
+                "What kind of compliments do you like hearing most?",
+                "What flirty thing have you wanted to say to me but haven’t yet?",
+                "Do you get jealous easily?",
+                "What’s something you’ve always wanted to try with someone?",
+                "How old were you when you first started dating?",
+                "Have you ever confessed to someone and got rejected?",
+                "What detail about me caught your attention before you even liked me?",
+                "What about our vibe feels like a spark you didn’t expect?",
+                "What moment made you think, “This is going to matter”?",
+                "What’s the first thing you noticed about me that you’ve never told me?",
+                "What’s the difference between love and infatuation—and which one did you feel first?",
+                "Have you ever lied about your feelings to avoid hurting someone?",
+                "What does commitment mean to you?",
+                "What’s something you haven’t healed from yet?",
+                "What’s your biggest pet peeve in arguments?",
+                "What’s your go-to move when you like someone?",
+                "How do you act when you’re crushing hard?",
+                "What’s your first impression of us as a duo?",
+                "What do you think we’d fight about, if ever?",
+                "What’s something you think you're really good at in relationships?",
+                "What’s one thing you struggle with in love?",
+                "Do you think you're easy or hard to love?",
+                "If someone asked, “What are you like in a relationship?”—what would you say?",
+                "Are you more clingy when you like someone, or do you pull away?",
+                "Do you believe in love at first sight, or attraction first?",
+                "What’s your favorite form of affection from a partner?",
+                "Would you do a couple TikTok trend with me?",
+                "What’s a silly habit you’d let me tease you for?",
+                "Who would win in a couple trivia about each other?",
+                "Would you do a “who’s more likely to” challenge with me?",
+                "What’s your love language in memes?",
+                "Do you fear abandonment, rejection, or not being enough more?",
+                "What do you think people often get wrong about you in love?",
+                "What scares you about being in a serious relationship?",
+                "What’s something you’re afraid of showing someone you love?",
+                "Do you think you’ve been a good partner in the past?",
+                "What’s something about love you misunderstood before?",
+                "What do you hope never changes between us if we get closer?",
+                "What’s something small that irrationally annoys you?",
+                "If someone was trying to win your heart, what detail would they have to notice?",
+                "What’s a weird compliment that would totally work on you?",
+                "What’s something you romanticize but have never tried?",
+                "How do you act when you’re trying not to fall too fast?",
+                "What’s a pattern you’re trying not to repeat with someone new?",
+                "When have you felt the most emotionally vulnerable with someone?",
+                "What’s one thing someone said that stuck with you in love—for better or worse?",
+                "What’s something you wish someone had fought harder for?",
+                "What did your last heartbreak teach you about yourself?",
+                "When did you last let someone see the real, unfiltered version of you?",
+                "What’s something you wish your past partners had told you earlier?",
+                "How do you usually react when you’re afraid of losing someone?",
+                "What’s a “what if” about us that you sometimes wonder about?",
+                "What do you tend to overthink when you’re emotionally close to someone?",
+                "What’s a wound you don’t talk about but still affects how you love?",
+                "When you're in love, what do you tend to give too much of?",
+                "If you had to describe your affection as a weather pattern, what would it be today?",
+                "What’s something “friendly” you’d do, but only because you’re in denial?",
+                "What detail of mine would you memorize when you thought I wasn’t looking?",
+                "What’s a small, almost-meaningless moment between us that stayed in your mind way longer than it should have?",
+                "What fear holds you back the most from saying everything you want to say?",
+                "What’s your biggest “green flag” you look for before fully investing in someone?",
+                "What makes a connection “real” to you, not just exciting?",
+                "What was your first “wait, I really like them” moment about me?",
+                "When you say you’re “all in,” what does that actually mean for you emotionally?",
+                "What boundary would you never cross, even if things between us weren’t clear?",
+                "If your friends didn’t like me, would it change how loyal you felt toward this connection?",
+                "How would I know you’re really choosing me — not just entertaining the idea of us?",
+                "What makes you stay — even when things get emotionally complicated?",
+                "How do you express commitment when you're still figuring things out?",
+                "What’s something about me that makes you want to open up more than you usually do?",
+                "What’s a side of you you’re still unsure if I’d accept?",
+                "What’s something you feel like we should talk about soon, even if it’s awkward?",
+                "When do you feel like we’re acting like something official, even if we’re not?",
+                "What makes this feel different from every other “talking stage” you’ve had?",
+                "What part of this feels like a commitment — even if nothing’s said?",
+                "What emotional signals do you send when you’re ready to move deeper?",
+                "If someone asked you who I am to you, what’s the real answer you’d want to give?",
+                "What signs from me would help you feel confident in taking the next step?",
+                "When would you want to have the “what are we” conversation — and why?",
+                "What’s one green flag you’ve seen in me that caught you off guard?",
+                "What makes you say, “I want to treat this right” instead of “Let’s see where it goes”?",
+                "What makes you feel like “this could actually last”?",
+                "What’s one thing you admire about the way I care for you?",
+                "What’s a red flag you used to accept, but now you’re proud to walk away from?",
+                "What’s something you’re learning to do better because of how I show up for you?",
+                "What’s something you’re still afraid to ask for in a relationship?",
+                "What’s something that seems small to others but is a major red flag to you?",
+                "What are you lowkey hoping I’ll ask, just so you can finally say it?",
+                "When do you feel most starved for reassurance — but pretend you're fine?",
+                "How do you handle missing someone who isn’t officially yours yet?",
+                "How do you know when your heart’s already in too deep?",
+                "What’s something you’ve been craving from me that feels too risky to ask for?",
+                "If I said, “You can fall — I’ll catch you,” how would you respond?",
+                "What makes you question whether you’re enough in someone’s life?",
+                "When do you doubt your own ability to be loved well?",
+                "What compliment do you wish you believed when people say it?",
+                "How do you sabotage love without meaning to?",
+                "When do you feel like your feelings are a burden — even if no one said so?",
+                "What’s something people praise in you, but you still struggle to believe?",
+                "What part of this connection makes you question whether you’re worth it?",
+                "What would make you fight for this — even if it got difficult?",
+                "If I said “prove you like me,” what would you do first?",
+                "What’s your most distracting thought when you’re around me?",
+                "What’s something innocent I do that feels borderline dangerous to your heart?",
+                "When do you catch yourself almost reaching for me?",
+                "What’s a sentence from me that would immediately shut down your overthinking?",
+                "What do you think I’m not ready to hear you say — even though I need to?",
+                "What part of you is already mine — even if we haven’t said it out loud yet?",
+                "What do you imagine it would feel like to be mine?",
+                "How would you describe our chemistry without using the word “chemistry”?",
+                "What makes you a little possessive of me — even without a label?",
+                "What makes you wonder who else is making me smile when we’re not talking?",
+                "What would you do if I said, “I don’t want to share your attention anymore”?",
+                "What part of my presence calms you even when I’m not trying?",
+                "What part of my attention feels like a reward to you?",
+                "What would you say if I asked you, “Do you want me for real or just the idea of me?”",
+                "What makes this worth risking comfort for?",
+                "What kind of lover do you imagine I’d be if I gave in to you completely?",
+                "When did I first make you nervous in the way that meant “I like you”?",
+                "What would you do if I looked you in the eye and said, “Just be honest with me — no games”?",
+                "If I whispered “don’t go” — would you stay?",
+                "What’s something you’ve been feeling but trying to logic your way out of?",
+                "What’s the thought you keep circling back to even when you try to move past it?",
+                "What emotion scares you the most when it comes to us?",
+                "What’s something that feels true but you haven’t let yourself believe yet?",
+                "When you catch yourself smiling at your phone, what part of you tells you to stop?",
+                "What do you think your heart knows that your mind won’t admit yet?",
+                "What’s a moment with me that you overthought for hours — and why?",
+                "What fear are you disguising as \"patience\"?",
+                "What contradiction about us are you still trying to make peace with?",
+                "How do you hide the fact that you're falling?",
+                "What do you pretend not to feel so you don’t look foolish?",
+                "How do you cope when your feelings are louder than my actions?",
+                "What’s something you feel about me but refuse to put into words — why?",
+                "What would break your heart if I ever said it to you?",
+                "What’s something I could do that would hurt more than you’d admit?",
+                "What are you most afraid of losing — the comfort, the connection, or me?",
+                "What kind of fight would scare you into thinking we might not make it?",
+                "What would it take for you to stay — even after everything felt broken?",
+                "How do you want someone to fight for you when you start shutting down?",
+                "What would make you believe we’re still worth saving — even after the worst fight?",
+                "What would I have to say to make you believe, “I’d never hurt you on purpose”?",
+                "How would you want to be loved while you’re healing from something I didn’t cause?",
+                "What version of love scared you so much, you promised never to need anyone again?",
+                "What’s something small that triggers a big feeling — and do you want me to know about it?",
+                "What makes you decide that someone is worth staying soft for?",
+                "What’s one habit of yours that shifts when you’re falling for someone?",
+                "What’s something I’ve done that made you take me seriously?",
+                "What makes someone feel safe to love, for you?",
+                "When did I start becoming more than “just someone you talk to”?",
+                "What’s a green flag in me that you don’t mention often but notice quietly?",
+                "Have I ever made you rethink what kind of partner you want?",
+                "What’s something I do that shows I care even when I don’t say it?",
+                "What part of our connection makes you think it’s worth holding onto?",
+                "If someone asked what kind of person I am, what would you say first?",
+                "What’s the difference between how you talk to me and how you talk to others?",
+                "Have you ever caught yourself planning around me without realizing?",
+                "What’s a quality in me that you didn’t know you needed?",
+                "What part of this feels rare to you?",
+                "What does “exclusive” mean to you, emotionally?",
+                "What’s a love language I use, even if I don’t say it’s mine?",
+                "How do I make you feel seen?",
+                "Have I ever made you feel like you could be a better version of yourself?",
+                "What do you think I deserve in love?",
+                "How do you know when you’re ready to give someone your full trust?",
+                "What would “serious” look like between us?",
+                "When you see me close to others, what do you feel?",
+                "What’s a small thing that could make you jealous, even if you hide it?",
+                "Have you ever wondered if I was getting close to someone else?",
+                "What do you think would happen if I stopped talking to you for a few days?",
+                "Is there someone from my past you’ve been curious or wary about?",
+                "Do you check if I’m online or active even when you’re not messaging?",
+                "What triggers your possessive side in love?",
+                "If I mentioned an ex, what’s the first emotion you’d feel?",
+                "What’s the most paranoid thought you’ve had about us?",
+                "Would it hurt if I posted someone else more than you?",
+                "What kind of attention do you want only from me?",
+                "What’s something I could do that would make you question my loyalty?",
+                "Have I ever said something that made you feel replaced?",
+                "What part of our closeness feels like it’s just ours?",
+                "Do you secretly hope I don’t get too close with others of the opposite gender?",
+                "What’s your way of showing others, “They’re mine” without saying it?",
+                "What scares you more: losing me slowly, or suddenly?",
+                "Would you feel something if someone else flirted with me—even jokingly?",
+                "What’s something you keep an eye on but never tell me you notice?",
+                "What’s a moment where you felt a bit territorial over me?",
+                "What’s the quiet fear in you when things are going too well?",
+                "Have you ever pulled away just because it felt too right?",
+                "What do you think could ruin this, even unintentionally?",
+                "If I ever got distant, would you ask or withdraw?",
+                "What do you fear more—being not enough, or too much?",
+                "Have you ever felt like your past might hurt your present?",
+                "What’s a version of you that only comes out when you’re scared to lose someone?",
+                "What’s something you wish I’d understand if we ever started drifting?",
+                "Have I made you believe you’re harder to love or easier to stay for?",
+                "How do you deal with loving someone when your brain tells you not to trust it?",
+                "Do you ever overthink texts from me?",
+                "What’s something I do that calms the voices that say “this won’t last”?",
+                "Have you ever written a message and deleted it out of fear?",
+                "What would you say if you could express your fear of losing me without sounding dramatic?",
+                "What’s your way of fighting for someone quietly?",
+                "What past experience taught you to doubt even good things?",
+                "When do you need me most but won’t say it?",
+                "Do you ever feel like pushing me away just to see if I stay?",
+                "What do you expect me to notice without you having to ask?",
+                "What do you crave in moments when you’re upset—space or presence?",
+                "What’s a silent way you show you’re overwhelmed?",
+                "When you’re distant, what’s the best thing someone can do?",
+                "What do you wish I knew about how to handle you at your worst?",
+                "Do you believe emotional closeness requires daily contact?",
+                "What’s a small gesture that instantly makes you feel connected again?",
+                "When do you get scared I might not understand your silence?",
+                "Have you ever needed me and pretended you didn’t?",
+                "What’s the difference between your bad mood and your “I need love” mood?",
+                "What does emotional safety look like between us?",
+                "Do you need to feel wanted or chosen more?",
+                "Have I ever unintentionally hurt your feelings by being distant or busy?",
+                "What kind of reassurance hits deeper than words?",
+                "When do you feel like disappearing—and what do you secretly hope I’d do?",
+                "What’s a question you wish I’d ask when you’re shutting down?",
+                "Have I ever been your peace in a storm?",
+                "What’s one “too much” part of you you’re afraid to show?",
+                "Have I made you feel valued just for existing?",
+                "What part of you have I helped heal, even a little?",
+                "How has knowing me changed your standard for love?",
+                "What’s one habit you’re trying to grow out of for the sake of us?",
+                "What version of you are you afraid I might not love?",
+                "When did you realize you were catching feelings for real?",
+                "Do you feel like you’re worth the kind of love you give?",
+                "What’s something you want to offer me, even if you’re not there yet?",
+                "What’s the difference between how you were before me and now?",
+                "What does “being enough” mean to you?",
+                "What’s something soft in you that I’ve helped protect?",
+                "What’s one red flag you’ve turned into a green flag?",
+                "Have you ever compared this to past experiences and felt relieved?",
+                "Do I make you want to be a more patient version of yourself?",
+                "What’s something about love you understand better now that we talk?",
+                "What do you admire about how I handle emotions?",
+                "What part of me do you find rare—not just romantic, but real?",
+                "If I asked you what kind of lover you hope to become, what would you say?",
+                "What’s one thing you’d do differently in love now because of me?"
+            ]
+        };
+
+        // Game state
+        let currentCategory = '';
+        let currentQuestionIndex = 0;
+        let completedQuestions = 0;
+        const totalQuestions = Object.values(questions).reduce((sum, arr) => sum + arr.length, 0);
+        
+        // DOM elements
+        const categoriesEl = document.getElementById('categories');
+        const questionContainerEl = document.getElementById('question-container');
+        const questionTextEl = document.getElementById('question-text');
+        const currentCategoryEl = document.getElementById('current-category');
+        const backButtonEl = document.getElementById('back-button');
+        const forfeitBtn = document.getElementById('forfeit-btn');
+        const completedBtn = document.getElementById('completed-btn');
+        const counterEl = document.getElementById('counter');
+        const completedEffectEl = document.getElementById('completed-effect');
+        const forfeitEffectEl = document.getElementById('forfeit-effect');
+        const progressEl = document.getElementById('progress');
+        
+        // Initialize game
+        function initGame() {
+            categoriesEl.style.display = 'flex';
+            questionContainerEl.style.display = 'none';
+            updateProgress();
+        }
+        
+        // Show category selection
+        function showCategories() {
+            categoriesEl.style.display = 'flex';
+            questionContainerEl.style.display = 'none';
+        }
+        
+        // Show questions for a category
+        function showQuestions(category) {
+            currentCategory = category;
+            currentQuestionIndex = 0;
+            
+            categoriesEl.style.display = 'none';
+            questionContainerEl.style.display = 'block';
+            
+            currentCategoryEl.textContent = category.charAt(0).toUpperCase() + category.slice(1);
+            displayQuestion();
+        }
+        
+        // Display current question
+        function displayQuestion() {
+            questionTextEl.textContent = questions[currentCategory][currentQuestionIndex];
+            counterEl.textContent = `Question ${currentQuestionIndex + 1} of ${questions[currentCategory].length}`;
+        }
+        
+        // Next question
+        function nextQuestion() {
+            currentQuestionIndex++;
+            
+            if (currentQuestionIndex < questions[currentCategory].length) {
+                displayQuestion();
+            } else {
+                // All questions completed for this category
+                showCategories();
+            }
+        }
+        
+        // Show completed effect
+        function showCompletedEffect() {
+            completedEffectEl.style.opacity = '1';
+            
+            // Create confetti
+            for (let i = 0; i < 30; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.classList.add('confetti');
+                    confetti.innerHTML = '🎉';
+                    confetti.style.left = `${Math.random() * 100}%`;
+                    confetti.style.top = `${Math.random() * 100}%`;
+                    confetti.style.transform = `scale(${0.5 + Math.random()})`;
+                    confetti.style.fontSize = `${2 + Math.random() * 3}rem`;
+                    
+                    completedEffectEl.appendChild(confetti);
+                    
+                    // Remove after animation
+                    setTimeout(() => {
+                        confetti.remove();
+                    }, 1000);
+                }, i * 100);
+            }
+            
+            setTimeout(() => {
+                completedEffectEl.style.opacity = '0';
+                completedEffectEl.innerHTML = '';
+            }, 1500);
+        }
+        
+        // Show forfeit effect
+        function showForfeitEffect() {
+            forfeitEffectEl.style.opacity = '1';
+            const heart = forfeitEffectEl.querySelector('.broken-heart');
+            heart.style.opacity = '1';
+            heart.style.transform = 'scale(1)';
+            heart.style.transition = 'all 0.5s ease';
+            
+            setTimeout(() => {
+                heart.style.transform = 'scale(1.2) rotate(10deg)';
+            }, 300);
+            
+            setTimeout(() => {
+                forfeitEffectEl.style.opacity = '0';
+                heart.style.opacity = '0';
+                heart.style.transform = 'scale(0.5)';
+            }, 1500);
+        }
+        
+        // Update progress bar
+        function updateProgress() {
+            const percentage = (completedQuestions / totalQuestions) * 100;
+            progressEl.style.width = `${percentage}%`;
+        }
+        
+        // Event listeners
+        document.querySelectorAll('.category').forEach(category => {
+            category.addEventListener('click', () => {
+                showQuestions(category.dataset.category);
+            });
+        });
+        
+        backButtonEl.addEventListener('click', showCategories);
+        
+        forfeitBtn.addEventListener('click', () => {
+            showForfeitEffect();
+            completedQuestions++;
+            updateProgress();
+            setTimeout(nextQuestion, 800);
+        });
+        
+        completedBtn.addEventListener('click', () => {
+            showCompletedEffect();
+            completedQuestions++;
+            updateProgress();
+            setTimeout(nextQuestion, 800);
+        });
+        
+        // Initialize the game
+        initGame();
+    </script>
+</body>
+</html>
