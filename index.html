@@ -3,43 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Truth Questions Game</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Truth Questions</title>
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Fredoka+One&family=Comfortaa:wght@400;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-        
+
         body {
-            background: linear-gradient(135deg, #0a0e2a, #1a1f4b);
-            color: #e6e6ff;
+            background: url('https://cdna.artstation.com/p/assets/images/images/020/895/676/original/simon-coroller-nd6rgow.gif') center/cover no-repeat fixed;
+            color: #ffffff;
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             padding: 20px;
+            font-family: 'Comfortaa', cursive;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(40, 10, 5, 0.85);
+            z-index: -1;
         }
         
         .game-container {
             width: 100%;
             max-width: 500px;
-            background: linear-gradient(to bottom, #121740, #0f142e);
-            border-radius: 20px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            background: rgba(60, 25, 15, 0.85);
+            border-radius: 25px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5), 
+                        0 0 30px rgba(180, 80, 20, 0.7),
+                        0 0 15px rgba(220, 100, 40, 0.7);
             overflow: hidden;
-            border: 3px solid #ff4d6d;
+            border: 3px solid #b45014;
             position: relative;
+            z-index: 1;
+            backdrop-filter: blur(5px);
         }
         
         .header {
-            background: linear-gradient(to right, #ff4d6d, #ff758c);
-            padding: 20px;
+            background: linear-gradient(to right, #b45014, #e06c40);
+            padding: 25px;
             text-align: center;
             position: relative;
             overflow: hidden;
+            border-bottom: 3px solid #e06c40;
         }
         
         .header::before {
@@ -49,73 +68,89 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="10" cy="10" r="3" fill="rgba(255,255,255,0.2)"/><circle cx="30" cy="25" r="2" fill="rgba(255,255,255,0.2)"/><circle cx="70" cy="15" r="4" fill="rgba(255,255,255,0.2)"/><circle cx="85" cy="40" r="3" fill="rgba(255,255,255,0.2)"/></svg>');
-            opacity: 0.3;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="10" cy="10" r="1.5" fill="rgba(255,220,180,0.5)"/><circle cx="30" cy="25" r="1" fill="rgba(255,220,180,0.5)"/><circle cx="70" cy="15" r="1.5" fill="rgba(255,220,180,0.5)"/><circle cx="85" cy="40" r="1" fill="rgba(255,220,180,0.5)"/></svg>');
+            opacity: 0.4;
         }
         
         .title {
-            font-size: 2.2rem;
+            font-size: 2.8rem;
             font-weight: 800;
-            color: white;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            color: #FFE4C4;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3),
+                         0 0 15px #b45014;
             letter-spacing: 1px;
             position: relative;
             z-index: 2;
+            font-family: 'Bangers', cursive;
+            margin-bottom: 5px;
+            letter-spacing: 2px;
         }
         
         .subtitle {
-            font-size: 1rem;
-            color: #ffebf0;
+            font-size: 1.1rem;
+            color: #FFDAB9;
             margin-top: 5px;
             position: relative;
             z-index: 2;
+            font-family: 'Fredoka One', cursive;
+            font-weight: normal;
         }
         
         .categories {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 15px;
-            padding: 25px 20px;
+            gap: 20px;
+            padding: 30px 20px;
         }
         
         .category {
-            background: linear-gradient(to bottom right, #2d325c, #252a50);
-            border-radius: 15px;
-            padding: 20px;
+            background: rgba(80, 35, 20, 0.8);
+            border-radius: 20px;
+            padding: 25px;
             text-align: center;
             width: 140px;
             cursor: pointer;
             transition: all 0.3s ease;
-            border: 2px solid #3a4070;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            border: 2px solid #b45014;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3),
+                        0 0 15px rgba(180, 80, 20, 0.5);
             position: relative;
             overflow: hidden;
         }
         
         .category:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-            border-color: #ff4d6d;
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 10px 25px rgba(180, 80, 20, 0.7),
+                        0 0 20px rgba(220, 100, 40, 0.7);
+            border-color: #e06c40;
         }
         
         .category-icon {
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-            color: #ff758c;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            font-size: 3rem;
+            margin-bottom: 15px;
+            color: #e06c40;
         }
         
         .category-title {
             font-weight: 700;
-            font-size: 1.1rem;
-            margin-bottom: 5px;
-            color: #ffffff;
+            font-size: 1.2rem;
+            margin-bottom: 8px;
+            color: #FFDAB9;
+            font-family: 'Fredoka One', cursive;
+            letter-spacing: 1px;
+        }
+        
+        .friend-title {
+            font-family: 'Comfortaa', cursive;
+            font-weight: 700;
+            color: #FFE4C4;
         }
         
         .category-count {
-            font-size: 0.9rem;
-            color: #a5a7c5;
+            font-size: 0.95rem;
+            color: #e06c40;
+            font-weight: 500;
         }
         
         .question-container {
@@ -131,115 +166,130 @@
         }
         
         .back-button {
-            background: #3a4070;
+            background: #b45014;
             border: none;
-            color: #e6e6ff;
-            width: 40px;
-            height: 40px;
+            color: white;
+            width: 45px;
+            height: 45px;
             border-radius: 50%;
             cursor: pointer;
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             display: flex;
             align-items: center;
             justify-content: center;
             transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2),
+                        0 0 10px rgba(180, 80, 20, 0.7);
         }
         
         .back-button:hover {
-            background: #ff4d6d;
+            background: #e06c40;
             transform: scale(1.1);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3),
+                        0 0 15px rgba(220, 100, 40, 0.7);
         }
         
         .current-category {
-            background: linear-gradient(to right, #ff4d6d, #ff758c);
-            padding: 5px 15px;
-            border-radius: 20px;
+            background: linear-gradient(to right, #b45014, #e06c40);
+            padding: 8px 18px;
+            border-radius: 25px;
             font-weight: 600;
-            font-size: 0.9rem;
+            font-size: 1rem;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2),
+                        0 0 10px rgba(180, 80, 20, 0.5);
+            font-family: 'Fredoka One', cursive;
+            letter-spacing: 1px;
+            color: #FFE4C4;
         }
         
         .question-box {
-            background: linear-gradient(to bottom, #1e2344, #252a50);
-            border-radius: 15px;
-            padding: 25px;
-            min-height: 200px;
+            background: rgba(70, 30, 15, 0.8);
+            border-radius: 20px;
+            padding: 30px;
+            min-height: 220px;
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
-            border: 2px solid #3a4070;
-            box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.3);
-            margin-bottom: 25px;
+            border: 2px solid #e06c40;
+            box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.3),
+                        0 0 20px rgba(220, 100, 40, 0.3);
+            margin-bottom: 30px;
             position: relative;
             overflow: hidden;
         }
         
         .question-text {
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             line-height: 1.6;
-            color: #ffffff;
+            color: #FFE4C4;
             font-weight: 500;
             position: relative;
             z-index: 2;
+            font-family: 'Comfortaa', cursive;
         }
         
         .question-box::before {
-            content: """"";
+            content: "\201C";
             position: absolute;
-            top: 10px;
-            left: 15px;
-            font-size: 4rem;
-            color: rgba(255, 117, 140, 0.1);
+            top: 15px;
+            left: 20px;
+            font-size: 6rem;
+            color: rgba(180, 80, 20, 0.15);
             font-family: Georgia, serif;
             z-index: 1;
         }
         
         .actions {
             display: flex;
-            gap: 15px;
+            gap: 20px;
             justify-content: center;
         }
         
         .action-button {
             flex: 1;
-            padding: 15px;
-            border-radius: 12px;
+            padding: 18px;
+            border-radius: 15px;
             border: none;
             font-weight: 700;
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             cursor: pointer;
             transition: all 0.3s ease;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            gap: 10px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+            font-family: 'Fredoka One', cursive;
+            letter-spacing: 1px;
         }
         
         .forfeit {
-            background: linear-gradient(to right, #4a4f7a, #3a4070);
-            color: #c5c7e4;
+            background: linear-gradient(to right, #8B0000, #A52A2A);
+            color: #FFDAB9;
         }
         
         .completed {
-            background: linear-gradient(to right, #4cd964, #2ecc71);
-            color: white;
+            background: linear-gradient(to right, #8FBC8F, #2E8B57);
+            color: #FFE4C4;
         }
         
         .action-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
         }
         
         .action-button:active {
-            transform: translateY(1px);
+            transform: translateY(2px);
         }
         
         .counter {
             text-align: center;
-            margin-top: 15px;
-            font-size: 0.9rem;
-            color: #a5a7c5;
+            margin-top: 20px;
+            font-size: 1rem;
+            color: #e06c40;
+            font-weight: 500;
+            font-family: 'Comfortaa', cursive;
         }
         
         /* Effects */
@@ -258,8 +308,8 @@
         }
         
         .confetti {
-            font-size: 3rem;
-            color: #ffeb3b;
+            font-size: 3.5rem;
+            color: #FFD700;
             position: absolute;
             opacity: 0;
         }
@@ -270,7 +320,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(255, 77, 109, 0.3);
+            background: rgba(139, 0, 0, 0.3);
             pointer-events: none;
             z-index: 100;
             display: flex;
@@ -280,34 +330,194 @@
         }
         
         .broken-heart {
-            font-size: 5rem;
-            color: #ff4d6d;
+            font-size: 6rem;
+            color: #8B0000;
             opacity: 0;
             transform: scale(0.5);
         }
         
         .footer {
-            padding: 15px;
+            padding: 20px;
             text-align: center;
-            background: rgba(26, 31, 75, 0.7);
-            font-size: 0.8rem;
-            color: #7a7d9c;
+            background: rgba(80, 35, 20, 0.8);
+            font-size: 0.9rem;
+            color: #e06c40;
+            font-weight: 500;
+            font-family: 'Fredoka One', cursive;
+            letter-spacing: 1px;
         }
         
         .progress-bar {
-            height: 6px;
-            background: #2d325c;
-            border-radius: 3px;
-            margin: 20px 0;
+            height: 8px;
+            background: #4A2A15;
+            border-radius: 4px;
+            margin: 25px 0;
             overflow: hidden;
+            box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.3);
         }
         
         .progress {
             height: 100%;
-            background: linear-gradient(to right, #ff4d6d, #ff758c);
-            border-radius: 3px;
+            background: linear-gradient(to right, #b45014, #e06c40);
+            border-radius: 4px;
             width: 0%;
             transition: width 0.5s ease;
+        }
+        
+        .lock-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .lock-content {
+            background: linear-gradient(135deg, #4A2A15, #5C3418);
+            border-radius: 25px;
+            padding: 40px;
+            text-align: center;
+            width: 90%;
+            max-width: 400px;
+            border: 3px solid #b45014;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5),
+                        0 0 30px rgba(180, 80, 20, 0.7);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .lock-icon {
+            font-size: 4rem;
+            color: #e06c40;
+            margin-bottom: 20px;
+        }
+        
+        .lock-title {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: #FFE4C4;
+            font-family: 'Bangers', cursive;
+            letter-spacing: 1px;
+        }
+        
+        .lock-subtitle {
+            font-size: 1.1rem;
+            margin-bottom: 25px;
+            color: #e06c40;
+            font-family: 'Comfortaa', cursive;
+            font-weight: 700;
+        }
+        
+        .password-input {
+            width: 100%;
+            padding: 15px;
+            font-size: 1.5rem;
+            text-align: center;
+            border-radius: 15px;
+            border: 2px solid #e06c40;
+            background: #4A2A15;
+            color: #FFE4C4;
+            margin-bottom: 20px;
+            letter-spacing: 10px;
+            font-weight: bold;
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3),
+                        0 0 10px rgba(220, 100, 40, 0.3);
+            font-family: 'Fredoka One', cursive;
+        }
+        
+        .password-input:focus {
+            outline: none;
+            border-color: #b45014;
+            box-shadow: 0 0 15px rgba(180, 80, 20, 0.7);
+        }
+        
+        .unlock-button {
+            background: linear-gradient(to right, #b45014, #e06c40);
+            color: #FFE4C4;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3),
+                        0 0 15px rgba(220, 100, 40, 0.3);
+            font-family: 'Fredoka One', cursive;
+            letter-spacing: 1px;
+        }
+        
+        .unlock-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(220, 100, 40, 0.7);
+        }
+        
+        .password-hint {
+            margin-top: 15px;
+            font-size: 0.9rem;
+            color: #e06c40;
+            font-family: 'Comfortaa', cursive;
+        }
+        
+        .password-error {
+            color: #FF4500;
+            margin-top: 10px;
+            font-weight: 600;
+            display: none;
+            font-family: 'Comfortaa', cursive;
+        }
+        
+        .hearts {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        .heart {
+            position: absolute;
+            color: #e06c40;
+            font-size: 1.5rem;
+            opacity: 0;
+            animation: float 8s linear infinite;
+        }
+        
+        .star {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: #FFDAB9;
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(255, 218, 185, 0.8);
+            animation: twinkle 3s infinite;
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0.2;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
+        @keyframes twinkle {
+            0%, 100% {
+                opacity: 0.3;
+            }
+            50% {
+                opacity: 1;
+            }
         }
         
         @media (max-width: 480px) {
@@ -324,6 +534,14 @@
             .actions {
                 flex-direction: column;
             }
+            
+            .lock-content {
+                padding: 30px 20px;
+            }
+            
+            .title {
+                font-size: 2.2rem;
+            }
         }
     </style>
 </head>
@@ -331,36 +549,34 @@
     <div class="game-container">
         <div class="header">
             <h1 class="title">Truth Questions</h1>
-            <p class="subtitle">Deepen your connections through meaningful conversations</p>
+            <p class="subtitle">Let's get to know each other more</p>
         </div>
         
         <div class="progress-bar">
             <div class="progress" id="progress"></div>
         </div>
-        
+
         <div class="categories" id="categories">
-            <div class="category" data-category="general">
-                <div class="category-icon">👤</div>
-                <div class="category-title">General</div>
-                <div class="category-count">20 Questions</div>
+        <div class="category" data-category="friend">
+            <div class="category-icon">
+                <img src="https://stickershop.line-scdn.net/stickershop/v1/sticker/773631807/android/sticker.png" alt="Friend Icon" style="width: 50px; height: 50px;">
             </div>
-            
-            <div class="category" data-category="friend">
-                <div class="category-icon">👫</div>
-                <div class="category-title">Friend</div>
-                <div class="category-count">20 Questions</div>
+                <div class="category-title">Friendship</div>
+                <div class="category-count">444 Questions</div>
             </div>
-            
+
             <div class="category" data-category="couple">
-                <div class="category-icon">💑</div>
-                <div class="category-title">Couple</div>
-                <div class="category-count">150+ Questions</div>
+            <div class="category-icon">
+                <img src="https://stickershop.line-scdn.net/stickershop/v1/sticker/56445445/android/sticker.png" alt="Couple Icon" style="width: 50px; height: 50px;">
+            </div>
+                <div class="category-title">Talking-stage</div>
+                <div class="category-count">504 Questions</div>
             </div>
         </div>
         
         <div class="question-container" id="question-container">
             <div class="question-header">
-                <button class="back-button" id="back-button">←</button>
+                <button class="back-button" id="back-button"><i class="fas fa-arrow-left"></i></button>
                 <div class="current-category" id="current-category">General</div>
             </div>
             
@@ -372,7 +588,7 @@
             
             <div class="actions">
                 <button class="action-button forfeit" id="forfeit-btn">
-                    <i class="fas fa-times"></i> Forfeited
+                    <i class="fas fa-times"></i> Forfeit
                 </button>
                 <button class="action-button completed" id="completed-btn">
                     <i class="fas fa-check"></i> Completed
@@ -385,22 +601,41 @@
         </div>
         
         <div class="completed-effect" id="completed-effect">
-            <!-- Confetti will be generated here -->
+            <!-- Confetti -->
         </div>
         
         <div class="forfeit-effect" id="forfeit-effect">
             <div class="broken-heart">💔</div>
         </div>
         
+        <div class="lock-modal" id="lock-modal">
+            <div class="lock-content">
+                <div class="lock-icon">
+                    <i class="fas fa-lock"></i>
+                </div>
+                <h2 class="lock-title">Locked</h2>
+                <p class="lock-subtitle">Enter the special password to unlock</p>
+                
+                <input type="password" class="password-input" id="password-input" maxlength="4" placeholder="****">
+                <div class="password-error" id="password-error">Incorrect password! Try again.</div>
+                
+                <button class="unlock-button" id="unlock-button">Unlock me</button>
+                
+                <div class="password-hint">
+                    <i class="fas fa-lightbulb"></i> Hint: It's a special date to Yuna / Ia(MMDD)
+                </div>
+            </div>
+        </div>
+        
         <div class="footer">
-            Answer honestly to deepen your connections • Share your answers to spark conversations
+            <i class="fas fa-heart"></i>Let's play this when we can<i class="fas fa-heart"></i>
         </div>
     </div>
 
     <script>
-        // Questions database - ALL questions included as requested
+        // Questions - ALL INCLUDED AS REQUESTED
         const questions = {
-            general: [
+            friend: [
                 "What’s your weirdest habit?",
                 "What’s something that always cheers you up?",
                 "What’s something simple that always makes you smile?",
@@ -420,10 +655,7 @@
                 "What’s something you wish you could unlearn from your childhood?",
                 "What were you like in school — quiet, popular, focused, misunderstood?",
                 "Did you ever feel out of place growing up? What caused that feeling?",
-                "What kind of emotional habits do you think you inherited from your family?"
-            ],
-            
-            friend: [
+                "What kind of emotional habits do you think you inherited from your family?",
                 "What’s a green flag in a partner?",
                 "What makes you feel safe in a relationship?",
                 "What kind of emotional support do you appreciate the most?",
@@ -443,7 +675,403 @@
                 "How do you personally define loyalty?",
                 "What does it feel like when someone wants you without asking you to prove your worth?",
                 "Have you ever opened up to someone and regretted it?",
-                "Would you rather be comforted or left alone when you're upset?"
+                "Would you rather be comforted or left alone when you're upset?",
+                "What do you think makes someone unforgettable?",
+                "What’s one thing you always notice first about someone you care about?",
+                "What kind of people do you usually find yourself drawn to?",
+                "Are you the type to bottle things up or vent quickly?",
+                "What’s something you’ve learned about yourself this year?",
+                "How do you think your friends would describe you?",
+                "What are you most stubborn about?",
+                "What’s something that instantly shuts you down in a conversation?",
+                "What’s one truth you’ve only recently accepted?",
+                "Have you ever felt like a friendship was more effort on your end?",
+                "What’s a boundary you’ve learned to protect better?",
+                "When was the last time you felt emotionally drained?",
+                "Is it easier for you to be honest or to be nice?",
+                "What’s something a friend did for you that you’ll never forget?",
+                "Have you ever felt invisible in a group?",
+                "Do you feel you’re better at being there for others or asking for help?",
+                "What’s something that instantly irritates you?",
+                "What’s your go-to reaction when you’re nervous?",
+                "What’s one trait you value most in yourself?",
+                "Do you care more about being liked or being understood?",
+                "What’s one thing you wish people knew about how you think?",
+                "Do you prefer soft-spoken people or high-energy ones?",
+                "Do you prefer one-on-one hangouts or groups?",
+                "When’s the last time you felt completely alive?",
+                "What memory makes you feel nostalgic lately?",
+                "Have you ever had a “this changed me” kind of moment?",
+                "What’s a small, random thing that made a big impact on your life?",
+                "When do you feel safest to open up to someone?",
+                "Have you ever had a falling out that still hurts a bit?",
+                "Do you believe in second chances when it comes to friendship?",
+                "What’s one friendship lesson you’ve had to learn the hard way?",
+                "Do you keep physical things (notes, objects) that remind you of people?",
+                "What’s something about yourself you hide from most people?",
+                "Have you ever written something you never sent — like a letter or message?",
+                "What’s a thought you come back to often but don’t really talk about?",
+                "What’s something you wish you could be more honest about?",
+                "When was the last time you felt truly vulnerable?",
+                "What’s a question you secretly hope someone would ask you?",
+                "If fear didn’t exist, what would you try first?",
+                "What’s something you’d chase even if you failed at it at first?",
+                "When do you feel most like yourself?",
+                "What’s something you’re still healing from?",
+                "What’s something you’re learning to accept about yourself?",
+                "How do you want to be remembered by the people who knew you well?",
+                "What do you usually do when you feel overwhelmed?",
+                "Are you someone who vents or keeps things in?",
+                "When was the last time you felt completely burnt out?",
+                "What’s a phrase or quote that gets you through tough days?",
+                "Who do you go to when you don’t want advice — just presence?",
+                "If you were a season, what would you be and why?",
+                "If your personality were an animal, what would it be?",
+                "If you had to express your mood only through colors today, what would it be?",
+                "What’s something you never told anyone out of fear of being misunderstood?",
+                "Have you ever felt like you gave too much of yourself to someone?",
+                "If someone read a diary entry about you, what would you hope it said?",
+                "What’s something you’ve carried emotionally for years?",
+                "Have you ever had a full conversation using only memes or inside jokes?",
+                "What’s something you always overreact about?",
+                "What’s the most unserious argument you’ve had with someone and took personally?",
+                "What item in your room is most likely to expose your weird habits?",
+                "If your personality had a mascot, what would it be?",
+                "What’s your most iconic unintentional moment?",
+                "Have you ever faked confidence and it actually worked?",
+                "What’s your “delulu” moment that you’ll never let go of?",
+                "What’s your inner monologue like during serious conversations?",
+                "If we had a duo name, what would it be?",
+                "What’s something about me that gives you instant “bestie material” energy?",
+                "What version of me do you think you know best — and do you like that version?",
+                "When was the last time you chose peace over proving a point?",
+                "What moment made you realize you needed to start over with yourself?",
+                "Who was the first person who made you feel like you weren’t “too much”?",
+                "What’s a scar you carry — physical or emotional — and the story behind it?",
+                "What’s the difference between who you are and who you perform as?",
+                "What’s a trait you hide because it has been misunderstood before?",
+                "Do you think people see you more clearly when you’re quiet or when you’re expressive?",
+                "What’s something you always overthink but rarely talk about?",
+                "When do you feel most invisible, even around people you care about?",
+                "If your emotions were a room, what would it look like today?",
+                "What’s a small joy that feels like a lifeline on hard days?",
+                "What’s a part of you that you’re still learning how to accept?",
+                "What kind of person do you become when you feel deeply safe?",
+                "What’s something you wish people asked you more often?",
+                "Have you ever downplayed your pain so you wouldn't burden someone?",
+                "What’s a compliment that stuck with you for years?",
+                "What’s something you're scared to want too much?",
+                "Do you think you love harder or hold back more than people realize?",
+                "What kind of silence feels comforting to you?",
+                "What emotion is hardest for you to sit with?",
+                "What’s a memory that hurts a little, even if it’s beautiful?",
+                "Have you ever felt like someone knew the version of you that wasn’t real?",
+                "When do you feel most like you're performing instead of existing?",
+                "If your mind could write a letter to your heart, what would it say?",
+                "What kind of presence do you bring into a room without trying?",
+                "What part of yourself do you feel goes unnoticed the most?",
+                "Do you think it’s possible to truly start over with someone emotionally?",
+                "What’s something you wish you had more patience for?",
+                "When do you feel most proud of how far you’ve come?",
+                "Have you ever felt like you were too much and not enough at the same time?",
+                "What’s one thing you wish someone had taught you about emotions earlier?",
+                "Do you find it easier to be needed or to ask to be held?",
+                "What’s something you do to feel like you have control again?",
+                "When do you feel the most disconnected from your own life?",
+                "What’s something you’re currently grieving — even if it seems small?",
+                "What’s a thought you revisit often, even if it hurts a little?",
+                "What made you realize we could be close friends?",
+                "When do I feel like a safe space to you?",
+                "What version of me feels the most genuine to you?",
+                "What’s something you think I value in our friendship?",
+                "When did you first feel comfortable being fully yourself around me?",
+                "What’s one thing you’ve always wanted to ask me as a friend but haven’t yet?",
+                "Do you think I’m the kind of friend who stays — even when things shift?",
+                "What’s a small thing I do that makes you feel seen as a friend?",
+                "When do you think we built trust — gradually or all at once?",
+                "Do you feel like we understand each other better now than when we first met?",
+                "What kind of support do I give best as a friend?",
+                "What’s something I’ve done that quietly strengthened our friendship?",
+                "When do I feel most emotionally available as a friend?",
+                "Have you ever held something back from me to protect the friendship?",
+                "What’s one boundary in our friendship that helps keep it healthy?",
+                "Do I feel more like a calming presence or a high-energy one in your life?",
+                "What’s a way we’ve grown together as friends over time?",
+                "What’s a moment in our friendship that felt like a turning point?",
+                "Do you think I know how to show up when things get heavy?",
+                "When do you feel the most appreciated by me as a friend?",
+                "What’s something about our friendship you think we both protect quietly?",
+                "What part of our dynamic do you think makes us good friends?",
+                "When we’re around others, do you think our friendship shifts at all?",
+                "What do you think I admire about you as a friend?",
+                "Do you feel like we’ve gone through enough to trust each other with silence?",
+                "What’s something you hope our friendship always keeps?",
+                "How do I usually respond when you’re not at your best?",
+                "Have I ever done something small that meant more than I realized?",
+                "Do you think we bring out the most honest version of each other?",
+                "What’s something I do that reassures you I’m still present in this friendship?",
+                "Do you think I’d call you out or comfort you first when you mess up?",
+                "When we fight or misunderstand each other, what’s your first instinct?",
+                "What’s something we’ve never done together that you’d like to try?",
+                "What does emotional safety in a friendship look like to you?",
+                "Do you think our friendship could survive a rough patch?",
+                "Have you ever felt guilty about needing space from our friendship?",
+                "What makes you feel most grounded in our connection?",
+                "Do I ever come off too guarded in our friendship?",
+                "What’s something you admire about the way I handle people?",
+                "When do you feel closest to me as a friend — in chaos or calm?",
+                "What kind of friendship memories do you hope we’ll look back on someday?",
+                "What’s something I say or do that always makes you feel lighter?",
+                "Have you ever wanted to tell me something but didn’t know how?",
+                "Do you feel like I’d still show up even when things get uncomfortable?",
+                "What’s one of your favorite shared moments with me?",
+                "What kind of emotional presence do you think I bring into this friendship?",
+                "When do I seem most like I’m trying to be strong — even when I’m not?",
+                "Have I ever reminded you of your worth when you forgot it yourself?",
+                "What’s something we both value that keeps our friendship strong?",
+                "Do you think we check in enough — or just assume we’re okay?",
+                "What do you think I’d never say but always mean in our friendship?",
+                "Have I ever unintentionally hurt you and you chose to move past it?",
+                "When we don’t talk for a while, do you feel like anything shifts?",
+                "What’s something I’ve never asked, but you wish I would?",
+                "Do I feel like a more present or distant friend lately?",
+                "What kind of space do I take up in your life — supportive, steady, or something else?",
+                "When have I made you laugh on a day you really needed it?",
+                "Do you feel like I listen well — or mostly just respond?",
+                "Have you ever questioned if I valued the friendship as much as you did?",
+                "What’s something we’ve gone through that deepened the friendship?",
+                "When you’re upset, do I help more by talking or just being there?",
+                "What do you think makes a friendship last — and do we have it?",
+                "Do I remind you to be soft with yourself or push through too quickly?",
+                "What’s a way our friendship has helped you grow?",
+                "Have you ever seen me differently after a difficult moment we shared?",
+                "When do you feel like I really understand your emotions?",
+                "Have I ever said something that stuck with you longer than I probably realized?",
+                "Do you think I’d stand up for you even when you’re not around?",
+                "What makes you trust me more — my words or my actions?",
+                "What’s one thing we’ve never talked about but probably could?",
+                "Do I feel more like a friend who heals or one who distracts?",
+                "What do you think I’ve learned from being friends with you?",
+                "What makes our friendship different from others you’ve had?",
+                "When you think about me, what energy do I bring to your life?",
+                "Have I ever taught you something without realizing it?",
+                "Do you think we’ve gotten better at communicating over time?",
+                "What’s a small moment that made our friendship feel real to you?",
+                "Have you ever felt like I noticed something others didn’t?",
+                "When you’re around me, do you feel the need to filter yourself?",
+                "What’s something you think we both avoid talking about?",
+                "How do you think we handle each other’s emotional walls?",
+                "What makes me feel like a dependable friend to you?",
+                "Have you ever been surprised by how much I cared?",
+                "Do you think we’d still be friends if we met in a different stage of life?",
+                "What part of our friendship are you most grateful for?",
+                "Have I ever disappointed you — and did we move past it?",
+                "When do I feel most like a soft landing for you?",
+                "What’s something you think I don’t give myself enough credit for as a friend?",
+                "Do you feel like our friendship makes room for who we’re becoming — not just who we were?",
+                "What kind of friend do you think I am when things fall apart?",
+                "What’s something about our friendship that feels effortless?",
+                "Do I feel like a friend who holds you together — or helps you let go?",
+                "Have I ever helped you feel more like yourself?",
+                "What do you think I offer that most people overlook in a friend?",
+                "What kind of emotional energy do you leave with after we talk?",
+                "When do you feel the most comfortable telling me the truth?",
+                "Have you ever felt like I saw something in you that you forgot was there?",
+                "What kind of silence between us feels comforting instead of awkward?",
+                "Do you feel like we know how to show up for each other — even without saying it outright?",
+                "Have you ever surprised yourself with how deeply you cared?",
+                "What’s one version of yourself you miss a little?",
+                "What does 'letting go' actually feel like for you?",
+                "What’s something you do that’s actually a quiet way of saying 'I’m not okay'?",
+                "When do you feel like the real you is most visible?",
+                "What does peace look like in your day-to-day life?",
+                "Have you ever lost a part of yourself trying to keep someone else?",
+                "What do you think love feels like when it’s safe?",
+                "When was the last time you felt emotionally full?",
+                "What’s a soft habit you picked up from someone you loved?",
+                "What’s one boundary that taught you how to value yourself more?",
+                "What’s something you always remember even if you try to forget?",
+                "Have you ever felt emotionally homeless — like you had nowhere to land?",
+                "When do you feel the most ‘held’ without needing to be touched?",
+                "Do you believe people always come back in some way?",
+                "What do you think you teach people emotionally, just by being you?",
+                "What’s a version of love you’re no longer willing to accept?",
+                "How do you show you care without using words?",
+                "When do you feel like your heart is speaking louder than your voice?",
+                "What’s something you noticed changing about yourself this year?",
+                "Have you ever caught yourself pretending you’re fine — just to keep the peace?",
+                "What kind of effort makes you feel the most appreciated?",
+                "What’s a moment you replay because it felt like being seen?",
+                "When do you usually feel safest to be soft?",
+                "What’s a part of yourself you used to hide but now embrace?",
+                "What does emotional freedom mean to you?",
+                "Have you ever loved someone in a way that surprised you?",
+                "What’s a story from your life that feels unfinished?",
+                "What does it mean for someone to really *know* you?",
+                "What kind of people make you feel emotionally safe?",
+                "What’s something that once made you feel small — that you’ve now reclaimed?",
+                "What’s a phrase you repeat in your mind when things feel heavy?",
+                "What part of your past do you revisit with both pain and gratitude?",
+                "What’s something you wish you could tell your past self on a hard day?",
+                "Have you ever had to let go of someone who still mattered to you?",
+                "When do you usually realize you’re bottling things up?",
+                "What’s something someone did once that made you feel *really* chosen?",
+                "What’s a version of you that only shows up around certain people?",
+                "What do you do when your heart feels too full — in a good or bad way?",
+                "Have you ever felt like someone only liked the idea of you?",
+                "What’s a moment that made you feel deeply human?",
+                "What’s something you’re learning to ask for — instead of just hoping for?",
+                "When did you last feel truly listened to?",
+                "What’s a truth you haven’t said out loud yet, but want to?",
+                "How do you know when someone’s about to become important to you?",
+                "Have you ever felt chosen just by the way someone stayed?",
+                "What’s something you realized about yourself only after being hurt?",
+                "When do you feel most emotionally available to others?",
+                "What’s a question you wish someone would ask — just to see if you’d answer honestly?",
+                "What’s something you forgive yourself for, even if it took a while?",
+                "What’s your quiet way of checking in on someone?",
+                "What’s something you feel but struggle to put into words?",
+                "Have you ever looked around and thought, 'I don’t belong here'?",
+                "When was the last time someone surprised you by understanding you?",
+                "What’s a moment that made you feel like you had to grow up fast?",
+                "How do you know when it’s time to walk away from something emotionally?",
+                "What’s something you still remember vividly — even if it happened years ago?",
+                "What do you do when someone pulls away, and you don’t know why?",
+                "What’s a quiet fear you carry into most relationships?",
+                "What does emotional honesty look like in practice — not just in theory?",
+                "What kind of reassurance actually works for you?",
+                "When do you feel like you’re finally being fully honest with yourself?",
+                "What’s something you stopped chasing — but still think about?",
+                "What’s a hidden version of you that still deserves love?",
+                "When do you feel like you’re the softest version of yourself?",
+                "Have you ever felt safe and scared in the same moment?",
+                "What do you usually need but rarely ask for?",
+                "What’s something that helps you come back to yourself when you're scattered?",
+                "Have you ever loved quietly, without needing to be seen?",
+                "What’s one emotional risk you’re still glad you took?",
+                "What’s a moment in your life that you wish you could relive — just to feel it again?",
+                "If you could be comforted without having to explain, what would that look like?",
+                "What kind of emotional intimacy do you crave most in friendships?",
+                "What’s one truth you’re still scared to admit to someone close to you?",
+                "What’s a fact about yourself most people don’t believe at first?",
+                "Which subject did you secretly enjoy at school, even if you never said it out loud?",
+                "What’s one food combination you love that others find weird?",
+                "If we were on a trivia team, what topic would be your strength?",
+                "What’s your guilty pleasure when no one’s around?",
+                "If you had to live in one fictional universe forever, which one would you pick?",
+                "What’s a song that always makes you feel nostalgic?",
+                "Do you believe your zodiac sign actually matches your personality?",
+                "What’s your go-to random fact that you always share when there’s silence?",
+                "If your personality had a color, what would it be and why?",
+                "Do you like chaos or calm more in your daily life?",
+                "What’s one small skill you’re unusually proud of?",
+                "If your life were a genre of movie, what would it be right now?",
+                "What’s your dream travel destination that most people wouldn’t expect?",
+                "Do you prefer being behind the scenes or in the spotlight?",
+                "What’s a TV show that shaped how you see the world?",
+                "If you could instantly master one hobby, what would it be?",
+                "Do you prefer voice memos or long texts when catching up?",
+                "What’s a childhood belief you held way too long?",
+                "What’s your favorite weird internet deep-dive topic?",
+                "What’s a food you hated as a kid but love now?",
+                "Are you more of a 'comfort rewatch' person or always chasing new shows?",
+                "What’s your ideal friend group vibe—small and close or big and chaotic?",
+                "What’s your favorite kind of compliment to receive?",
+                "Do you have a personal motto or quote you always return to?",
+                "What’s the most ‘you’ purchase you’ve ever made?",
+                "If someone made a documentary about you, what would it be called?",
+                "Do you learn better through doing, listening, or watching?",
+                "What’s your strongest sense—sight, hearing, smell, etc?",
+                "What’s a smell that brings back a vivid memory for you?",
+                "Which board game reveals your competitive side?",
+                "What kind of YouTube rabbit holes do you fall into?",
+                "What’s your most irrational fear that’s still very real to you?",
+                "What’s one thing you absolutely need to function in the morning?",
+                "Do you prefer chaos energy or steady energy in a friend group?",
+                "What’s a fictional character you relate to more than you probably should?",
+                "What’s your go-to comfort activity when you feel overstimulated?",
+                "What’s a random interest you’ve always wanted to talk about more?",
+                "Do you think you’d survive in a reality competition show?",
+                "What’s your low-effort self-care ritual that always works?",
+                "What’s a phrase or inside joke that always makes you laugh?",
+                "What topic would you dominate in a 'useless knowledge' contest?",
+                "Would you rather explore outer space or the deep sea—and why?",
+                "Do you feel more energized by solitude or social time?",
+                "What’s your favorite oddly specific aesthetic?",
+                "Do you like background noise when working or complete silence?",
+                "What’s one piece of advice you actually took—and it changed something?",
+                "Which fictional friend group do you think we'd fit into best?",
+                "What’s your favorite way to spend time with a friend that isn’t just talking?",
+                "Are you a planner, a drifter, or a last-minute miracle type?",
+                "What’s one tradition you wish more friendships kept alive?",
+                "If your sense of humor was a meme page, what would it be called?",
+                "What do you appreciate most in a friendship—consistency, surprise, depth?",
+                "What’s a tiny detail about a friend that always makes you feel safe?",
+                "If someone wanted to really understand you, what would they need to know first?",
+                "What’s your social battery limit in hours on a good day?",
+                "What’s a trait that instantly makes you respect someone?",
+                "Do you believe people can outgrow friendships—and is that sad or natural?",
+                "What’s your ideal amount of alone time per week?",
+                "What’s a fictional friendship that shaped how you see loyalty?",
+                "If you were a scent, what would you smell like?",
+                "What’s a public opinion you completely disagree with?",
+                "What’s your perfect casual hangout plan with a friend?",
+                "What’s something you admire in others but struggle to embody yourself?",
+                "What’s your most specific pet peeve?",
+                "Do you prefer sharing playlists or book recommendations with friends?",
+                "What’s a ‘safe’ topic that instantly sparks good conversations for you?",
+                "How do you feel about confrontation between friends?",
+                "What’s something that earns your trust quickly in someone?",
+                "Do you remember more feelings, words, or visuals?",
+                "If you had to wear one outfit that represents your vibe, what would it include?",
+                "What’s your emotional first aid kit made up of?",
+                "What’s one 'weird' thing you totally normalize with close friends?",
+                "Do you prefer deep talks by accident or on purpose?",
+                "What’s something you value in friendship that doesn’t get enough attention?",
+                "What’s one question you wish people asked you more often?",
+                "How do you usually reconnect after drifting from someone?",
+                "What’s your love language in friendships?",
+                "Do you overthink what you send—or just hit send?",
+                "What kind of energy do you bring into a group chat?",
+                "If your personality was a flavor, what would it be?",
+                "Do you believe in friendship soulmates?",
+                "What kind of jokes instantly make you laugh no matter what?",
+                "What’s your signature reaction when you’re excited about something?",
+                "What are your go-to 'get to know me' facts?",
+                "What’s your friendship red flag you’ve only learned to recognize later?",
+                "Would you rather someone call you loyal, fun, or wise?",
+                "What’s your social recharge strategy after too much peopling?",
+                "Do you feel more comfortable giving advice or just listening?",
+                "What’s your favorite way to show appreciation for a friend?",
+                "What’s a nostalgic snack or candy that takes you back instantly?",
+                "What kind of weird questions do you *love* being asked?",
+                "If your energy was a time of day, when would it be?",
+                "Do you have a ‘starter pack’ for getting to know you better?",
+                "What’s something you do when you’re secretly overwhelmed?",
+                "Would you rather be described as unpredictable or dependable?",
+                "What’s something people often misunderstand about your quietness or loudness?",
+                "What’s one belief you’ve changed your mind about recently?",
+                "Do you lean more curious or cautious when meeting someone new?",
+                "What’s a low-stakes question you think says a lot about someone?",
+                "Do you prefer spontaneous check-ins or planned catch-ups?",
+                "What’s your default expression when thinking deeply?",
+                "What’s a personality test that actually felt accurate for you?",
+                "How do you define closeness in friendship—time, energy, trust?",
+                "If you had to describe yourself in 5 emojis, what would they be?",
+                "What would you include in a starter kit for being your friend?",
+                "What’s a minor opinion hill you're totally willing to die on?",
+                "How do you usually react when someone remembers a tiny detail about you?",
+                "What would you name our friend duo if we were a podcast?",
+                "What makes you instantly click with someone?",
+                "What would your honest friendship tagline be?",
+                "What’s one social situation that secretly drains you the fastest?",
+                "Do you believe vulnerability and fun can co-exist in friendship?",
+                "How do you usually act when you're feeling really safe with someone?",
+                "What’s your favorite form of friendly affection?",
+                "What’s a simple question that always leads to a surprisingly deep answer?",
+                "Do you prefer friendships that are low-maintenance or highly involved?",
+                "What do you think people would be surprised to learn about how you connect with others?",
+                "If someone asked what kind of friend you are, what would you hope they'd say?"
             ],
             
             couple: [
@@ -761,15 +1389,187 @@
                 "What do you admire about how I handle emotions?",
                 "What part of me do you find rare—not just romantic, but real?",
                 "If I asked you what kind of lover you hope to become, what would you say?",
-                "What’s one thing you’d do differently in love now because of me?"
+                "What’s one thing you’d do differently in love now because of me?",
+                "Do you ever wonder if we can ever go fully back to zero?",
+                "Do you think we flirt even when we don’t mean to?",
+                "Have you told someone else about the tension between us?",
+                "What makes it hardest to keep the boundary intact?",
+                "What’s your most irrational fear when it comes to me?",
+                "Do you flinch when someone asks if we were ever a “thing”?",
+                "Do you still love the version of me who cared a little too much? Why?",
+                "What do you think we’re both pretending not to notice? Why?",
+                "If we had a playlist together, what kind of songs would be on it?",
+                "What scares you more — loving someone or being loved by them? Why?",
+                "What kind of affection do you miss most, even as “just friends”?",
+                "Have you ever felt jealous but had no right to be?",
+                "When was the last time you convinced yourself to “stay just friends” even if you didn’t want to?",
+                "Have I ever confused you with the way I act?",
+                "What version of yourself do you show me that you don’t show others?",
+                "Do you think there’s such a thing as the “right person, wrong time”?",
+                "What type of affection do you crave but don’t know how to ask for?",
+                "Do you still carry fears from your last heartbreak?",
+                "Has someone ever made you feel “too much” for loving deeply?",
+                "Do you ever wait for me to message first, even if you don’t say it?",
+                "Do you ever get scared that I’ll stop treating you the way I do?",
+                "Have you ever misread my actions as something more?",
+                "Do you think we met too early or just in time?",
+                "If you could relive one day with me and change something, what would it be?",
+                "What do you think scares you more — commitment or regret?",
+                "What song feels like “us” even if we’re not together?",
+                "What’s a fictional couple we remind you of?",
+                "What would you miss most if we drifted away?",
+                "What’s something you’ve always been scared to ask me?",
+                "What would make it easier for you to take a risk with me?",
+                "Have you ever liked someone who never found out?",
+                "What’s a detail about me that sticks with you more than it should?",
+                "What do you do when you start to care more than you planned?",
+                "What’s a wound you don’t talk about but still affects how you love?",
+                "What would someone find if they stayed through all your emotional layers?",
+                "What emotional risk have you been wanting to take—but haven’t yet?",
+                "What do you secretly need to hear, even if you'd never ask for it?",
+                "If we were talking at 2AM, what’s something you’d only admit in that silence?",
+                "What do you want someone to understand without needing to say it?",
+                "What would it take for you to stop hiding parts of yourself in a relationship?",
+                "If I told you I wanted to understand the parts of you you’re ashamed of, what would you say?",
+                "What version of you are you scared someone won’t accept?",
+                "What does “I won’t leave” mean to you, and have you believed it before?",
+                "How do you test if someone’s love is genuine?",
+                "What do you secretly hope I never find out about your early crushes?",
+                "What’s a way you pretend to be chill when you’re secretly flustered?",
+                "What reaction of mine are you already trying to figure out how to trigger?",
+                "What emotion do you show differently than how you feel it?",
+                "When do you catch yourself overanalyzing something I said or did?",
+                "What’s your go-to move when you want someone to miss you?",
+                "What’s something I do that makes you forget to keep your guard up?",
+                "What’s a compliment you give when you're flirting—but not ready to admit it yet?",
+                "When do you know you're falling—based on how you text?",
+                "What do you pretend you don’t care about, but secretly do a lot?",
+                "What’s the internal panic moment you have during a really good date?",
+                "What’s a habit that accidentally exposes your feelings before you’re ready?",
+                "When you're emotionally caught off-guard, how does it show physically?",
+                "What moment would make you immediately text a friend, “I think I’m in trouble 😳”?",
+                "What kind of subtle signal do you give when you’re attracted to someone?",
+                "What’s the first sign you’re starting to care more than you planned to?",
+                "What’s a part of your routine that would change if I became part of it?",
+                "What quiet act would show me you’re choosing me, even if you didn’t say it?",
+                "If we ran away together for 24 hours, where would your heart want to take us?",
+                "What part of you gets louder when you’re around someone you secretly crave?",
+                "What’s something annoying I do that you secretly find endearing?",
+                "If we had met during a petty argument, what would we have been arguing about?",
+                "What would I say or do that would ruin your attempt to “stay mad” at me?",
+                "What part of me would you tease first if we were always bickering playfully?",
+                "What caught your attention about me before you even knew me?",
+                "What about our vibe feels like a spark you didn’t expect?",
+                "What moment made you think, “This is going to matter”?",
+                "What’s the first thing you noticed about me that you’ve never told me?",
+                "What part of me felt oddly familiar—like déjà vu?",
+                "If we were to take a personality quiz together, which part do you think we'd answer the same?",
+                "What’s your love language in daily routines—not just romantic moments?",
+                "Which fictional couple reminds you a little of us?",
+                "What role do you usually play in a group dynamic—and does that change when you’re with a partner?",
+                "Do you believe in soulmates, or just really strong compatibility?",
+                "What’s one song lyric that always makes you think of love or relationships?",
+                "What’s something you’ve always wanted your partner to understand about you without you saying it?",
+                "What’s your most niche obsession or interest that you secretly want someone to love with you?",
+                "Are you more of a gift-giver or a surprise-planner?",
+                "What’s something your ideal partner would *never* do in your book?",
+                "What’s a movie or show you’d love to binge with me and talk about after?",
+                "What’s a restaurant you’d want to turn into a regular spot for us?",
+                "What do you think our ‘us’ playlist would sound like?",
+                "What kind of trip would you want us to take to really get to know each other better?",
+                "What’s a fictional world you’d want to live in as a couple?",
+                "Do you like texting all day, or just checking in at key moments?",
+                "What would your dream lazy Sunday with me look like?",
+                "If we had a couples’ inside joke, what do you think it’d be about?",
+                "Are you more into deep convos late at night or playful teasing during the day?",
+                "What do you think is a love language that gets underrated?",
+                "Would you want to have a shared hobby or keep our interests separate?",
+                "What’s a game (video, board, or card) you’d want us to play together?",
+                "What’s something you’d love to nerd out about with me?",
+                "Do you think we’d be the type of couple who plans everything or wings it?",
+                "How do you feel about working together on a creative project—would it bond or stress us?",
+                "What’s your favorite kind of small gesture to receive?",
+                "What show would you want us to watch every week as a ritual?",
+                "What would our coffee shop orders say about our personalities?",
+                "What kind of couple aesthetic do you secretly love—grunge, cottagecore, minimalist?",
+                "What’s one couple cliché you secretly want to try, even if it’s cheesy?",
+                "Do you like more physical souvenirs from dates (photos, receipts) or just memories?",
+                "What kind of pet would suit us if we lived together?",
+                "Would you want us to take a couple class together (like cooking, dancing, etc)?",
+                "How do you feel about shared social media things—matching bios, couple posts, etc?",
+                "What’s something you’d want us to always do together, no matter how long we’ve been together?",
+                "Would you rather be the partner who plans surprises or gets surprised?",
+                "What’s your ideal way to celebrate anniversaries or milestones?",
+                "What do you think our go-to couple nickname would be among friends?",
+                "What couple dynamic do you *not* want to fall into—and why?",
+                "What’s a daily ritual you’d want to build with your partner?",
+                "How do you feel about sleeping on arguments—resolving now or waiting it out?",
+                "What’s a food combo or weird snack you’d want me to try just once?",
+                "What kind of art or decor screams 'us' to you?",
+                "Would you want to document our moments through photos or just keep them in memory?",
+                "How do you feel about having couple boundaries when it comes to sharing on social media?",
+                "What’s something you’d want your partner to *never forget* about who you are?",
+                "Would you rather we had matching bracelets or coded phrases only we understand?",
+                "What do you think our couple communication style would be—direct, playful, poetic?",
+                "Would you rather do a couple challenge or couple Q&A for fun?",
+                "What’s a scent that would instantly remind you of home—or me?",
+                "What’s a dream date you’ve never done because you haven’t found the right person yet?",
+                "What kind of music vibe best fits your idea of romance?",
+                "Would you want us to try a long-distance challenge, just to test connection?",
+                "How do you feel about boundaries when it comes to friendships while dating?",
+                "Would you rather be super public about our relationship or keep it private and sacred?",
+                "What kind of meme or emoji combo would represent us perfectly?",
+                "Would you want to do couple journaling or just keep thoughts to yourself?",
+                "What would be our go-to comfort food after a long day together?",
+                "What game or challenge would totally expose who’s more competitive between us?",
+                "Do you think we’d fight over who chooses what to watch—or vibe in sync?",
+                "What’s one place you’d want us to go where you’ve never been with anyone else?",
+                "How important is shared taste in music or movies for you in a couple?",
+                "What kind of text from me would instantly brighten your day?",
+                "Would you rather go on spontaneous road trips or detailed-planned vacations?",
+                "What kind of fictional love story makes you believe in real ones?",
+                "What’s a restaurant or café you dream of going to as a couple?",
+                "If we had a shared playlist, what’s one song that *must* be on it?",
+                "What’s a date idea you’ve always wanted to try but never have?",
+                "Would you rather spend a rainy day indoors cuddling or walking under the rain?",
+                "What’s a dream collaboration or creative thing you’d want us to make together?",
+                "Do you prefer quiet companionship or talk-filled dates?",
+                "What part of your day would you want me most involved in?",
+                "If I gave you a nickname, what kind of tone would you like—cute, ironic, serious?",
+                "Would you rather leave love notes or voice memos for each other?",
+                "Do you prefer nostalgic love stories or fresh, unconventional ones?",
+                "What’s something you’d want us to try just for the plot?",
+                "How would you want us to document our love—photos, voice clips, writing?",
+                "Do you think couple rituals make bonds stronger—or do you like spontaneity more?",
+                "What’s something you’d never compromise on, even in a relationship?",
+                "How do you feel about inside jokes vs. deep convos—what bonds you faster?",
+                "What’s your favorite way to receive affection during a bad mood?",
+                "What kind of challenge do you think we’d be good at doing together?",
+                "What’s one thing you think I’d be surprised to learn you love?",
+                "Do you like being serenaded or would that make you shy?",
+                "What’s a random fact you’d want me to remember about you always?",
+                "Would you rather build a home together someday—or travel the world endlessly?",
+                "Do you like the idea of matching lock screens or is that too cheesy for you?",
+                "What’s a non-romantic trait you really value in a partner?",
+                "What kind of vibe would our couple photos give off—moody, playful, candid?",
+                "If we had a shared journal, what would you want to write about?",
+                "What’s a bucket list moment you’d want to cross off *with* someone special?",
+                "What’s something you’d love for us to learn or experience for the first time *together*?",
+                "How would you feel about doing challenges that test our compatibility?",
+                "Would you want to keep mementos from every date—or just the big ones?",
+                "If we ever got lost together, what kind of vibe would we have—chaotic or calm?",
+                "Would you rather be the spontaneous one or the grounded one in a couple?",
+                "What’s your ideal way to reconnect after a miscommunication?",
+                "If we ever had to make a couple logo, what symbols or themes would it include?"
             ]
         };
 
-        // Game state
+                // Game state
         let currentCategory = '';
         let currentQuestionIndex = 0;
         let completedQuestions = 0;
         const totalQuestions = Object.values(questions).reduce((sum, arr) => sum + arr.length, 0);
+        const CORRECT_PASSWORD = "0421";
         
         // DOM elements
         const categoriesEl = document.getElementById('categories');
@@ -783,18 +1583,42 @@
         const completedEffectEl = document.getElementById('completed-effect');
         const forfeitEffectEl = document.getElementById('forfeit-effect');
         const progressEl = document.getElementById('progress');
+        const lockModalEl = document.getElementById('lock-modal');
+        const passwordInputEl = document.getElementById('password-input');
+        const unlockButtonEl = document.getElementById('unlock-button');
+        const passwordErrorEl = document.getElementById('password-error');
+        
+        // Create floating hearts
+        function createHearts() {
+            const heartsContainer = document.createElement('div');
+            heartsContainer.className = 'hearts';
+            document.body.appendChild(heartsContainer);
+            
+            for (let i = 0; i < 15; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'heart';
+                heart.innerHTML = '❤️';
+                heart.style.left = `${Math.random() * 100}%`;
+                heart.style.fontSize = `${Math.random() * 1.5 + 1}rem`;
+                heart.style.animationDelay = `${Math.random() * 5}s`;
+                heartsContainer.appendChild(heart);
+            }
+        }
         
         // Initialize game
         function initGame() {
             categoriesEl.style.display = 'flex';
             questionContainerEl.style.display = 'none';
+            lockModalEl.style.display = 'none';
             updateProgress();
+            createHearts();
         }
         
         // Show category selection
         function showCategories() {
             categoriesEl.style.display = 'flex';
             questionContainerEl.style.display = 'none';
+            lockModalEl.style.display = 'none';
         }
         
         // Show questions for a category
@@ -804,13 +1628,18 @@
             
             categoriesEl.style.display = 'none';
             questionContainerEl.style.display = 'block';
+            lockModalEl.style.display = 'none';
             
-            currentCategoryEl.textContent = category.charAt(0).toUpperCase() + category.slice(1);
+            currentCategoryEl.textContent = category === 'friend' ? 'Friendship' : 'Love';
             displayQuestion();
         }
         
         // Display current question
         function displayQuestion() {
+            // Shuffle the questions array for variety each time a category is chosen
+            if (currentQuestionIndex === 0) {
+                questions[currentCategory].sort(() => Math.random() - 0.5);
+            }
             questionTextEl.textContent = questions[currentCategory][currentQuestionIndex];
             counterEl.textContent = `Question ${currentQuestionIndex + 1} of ${questions[currentCategory].length}`;
         }
@@ -823,6 +1652,7 @@
                 displayQuestion();
             } else {
                 // All questions completed for this category
+                alert(`You've completed all ${currentCategory === 'friend' ? 'friendship' : 'love'} questions!`);
                 showCategories();
             }
         }
@@ -848,7 +1678,7 @@
                     setTimeout(() => {
                         confetti.remove();
                     }, 1000);
-                }, i * 100);
+                }, i * 50); // Faster confetti
             }
             
             setTimeout(() => {
@@ -882,10 +1712,48 @@
             progressEl.style.width = `${percentage}%`;
         }
         
+        // Show lock modal for couple questions
+        function showLockModal() {
+            lockModalEl.style.display = 'flex';
+            passwordInputEl.value = '';
+            passwordErrorEl.style.display = 'none';
+            passwordInputEl.focus();
+        }
+        
+        // Check password
+        function checkPassword() {
+            if (passwordInputEl.value === CORRECT_PASSWORD) {
+                // Correct password
+                passwordErrorEl.style.display = 'none';
+                lockModalEl.style.display = 'none';
+                showQuestions('couple');
+            } else {
+                // Incorrect password
+                passwordErrorEl.style.display = 'block';
+                passwordInputEl.value = '';
+                passwordInputEl.focus();
+                
+                // Shake animation
+                passwordInputEl.animate([
+                    { transform: 'translateX(0)' },
+                    { transform: 'translateX(-10px)' },
+                    { transform: 'translateX(10px)' },
+                    { transform: 'translateX(-10px)' },
+                    { transform: 'translateX(0)' }
+                ], {
+                    duration: 400
+                });
+            }
+        }
+        
         // Event listeners
         document.querySelectorAll('.category').forEach(category => {
             category.addEventListener('click', () => {
-                showQuestions(category.dataset.category);
+                if (category.dataset.category === 'couple') {
+                    showLockModal();
+                } else {
+                    showQuestions(category.dataset.category);
+                }
             });
         });
         
@@ -893,8 +1761,6 @@
         
         forfeitBtn.addEventListener('click', () => {
             showForfeitEffect();
-            completedQuestions++;
-            updateProgress();
             setTimeout(nextQuestion, 800);
         });
         
@@ -903,6 +1769,14 @@
             completedQuestions++;
             updateProgress();
             setTimeout(nextQuestion, 800);
+        });
+        
+        unlockButtonEl.addEventListener('click', checkPassword);
+        
+        passwordInputEl.addEventListener('keyup', (e) => {
+            if (e.key === 'Enter') {
+                checkPassword();
+            }
         });
         
         // Initialize the game
