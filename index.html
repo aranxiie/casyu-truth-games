@@ -111,7 +111,7 @@
             text-align: center;
             width: 140px;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
             border: 2px solid #b45014;
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3),
                         0 0 15px rgba(180, 80, 20, 0.5);
@@ -120,10 +120,14 @@
         }
         
         .category:hover {
-            transform: translateY(-5px) scale(1.05);
-            box-shadow: 0 10px 25px rgba(180, 80, 20, 0.7),
-                        0 0 20px rgba(220, 100, 40, 0.7);
-            border-color: #e06c40;
+            transform: translateY(-8px) scale(1.06);
+            box-shadow: 0 12px 30px rgba(180, 80, 20, 0.7),
+                        0 0 25px rgba(220, 100, 40, 0.8);
+            border-color: #f07f50;
+        }
+
+        .category:active {
+            transform: translateY(-2px) scale(1.02);
         }
         
         .category-icon {
@@ -184,7 +188,7 @@
         
         .back-button:hover {
             background: #e06c40;
-            transform: scale(1.1);
+            transform: scale(1.15) rotate(-10deg);
             box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3),
                         0 0 15px rgba(220, 100, 40, 0.7);
         }
@@ -254,7 +258,7 @@
             font-weight: 700;
             font-size: 1.2rem;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -275,12 +279,15 @@
         }
         
         .action-button:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.45);
+            filter: brightness(1.1);
         }
         
         .action-button:active {
-            transform: translateY(2px);
+            transform: translateY(2px) scale(0.97);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            filter: brightness(0.95);
         }
         
         .counter {
@@ -453,8 +460,9 @@
         }
         
         .unlock-button:hover {
-            transform: translateY(-3px);
+            transform: translateY(-4px);
             box-shadow: 0 10px 25px rgba(220, 100, 40, 0.7);
+            filter: brightness(1.15);
         }
         
         .password-hint {
@@ -521,18 +529,30 @@
         }
         
         @media (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+
+            .game-container {
+                width: 100%;
+                border-radius: 20px;
+            }
+            
             .categories {
                 flex-direction: column;
                 align-items: center;
+                gap: 15px;
+                padding: 20px 15px;
             }
             
             .category {
                 width: 100%;
-                max-width: 300px;
+                max-width: 350px;
             }
             
             .actions {
                 flex-direction: column;
+                gap: 15px;
             }
             
             .lock-content {
@@ -540,7 +560,27 @@
             }
             
             .title {
-                font-size: 2.2rem;
+                font-size: 2.3rem;
+            }
+            
+            .subtitle {
+                font-size: 1rem;
+            }
+
+            .question-text {
+                font-size: 1.15rem;
+                line-height: 1.5;
+            }
+            
+            .action-button {
+                padding: 15px;
+                font-size: 1.1rem;
+            }
+
+            .password-input {
+                letter-spacing: 5px;
+                padding: 12px;
+                font-size: 1.3rem;
             }
         }
     </style>
@@ -557,31 +597,30 @@
         </div>
 
         <div class="categories" id="categories">
-        <div class="category" data-category="friend">
-            <div class="category-icon">
-                <img src="https://stickershop.line-scdn.net/stickershop/v1/sticker/773631807/android/sticker.png" alt="Friend Icon" style="width: 50px; height: 50px;">
-            </div>
+            <div class="category" data-category="friend">
+                <div class="category-icon">
+                    <img src="https://stickershop.line-scdn.net/stickershop/v1/sticker/773631807/android/sticker.png" alt="Friend Icon" style="width: 50px; height: 50px;">
+                </div>
                 <div class="category-title">Friendship</div>
                 <div class="category-count">444 Questions</div>
             </div>
 
             <div class="category" data-category="couple">
-            <div class="category-icon">
-                <img src="https://stickershop.line-scdn.net/stickershop/v1/sticker/56445445/android/sticker.png" alt="Couple Icon" style="width: 50px; height: 50px;">
-            </div>
+                <div class="category-icon">
+                    <img src="https://stickershop.line-scdn.net/stickershop/v1/sticker/56445445/android/sticker.png" alt="Couple Icon" style="width: 50px; height: 50px;">
+                </div>
                 <div class="category-title">Talking-stage</div>
                 <div class="category-count">504 Questions</div>
             </div>
-        </div>
-        <div class="categories" id="general">
-        <div class="category" data-category="general">
-            <div class="category-icon">
-                <img src="https://stickershop.line-scdn.net/stickershop/v1/sticker/773631807/android/sticker.png" alt="Friend Icon" style="width: 50px; height: 50px;">
-            </div>
+            
+            <div class="category" data-category="general">
+                <div class="category-icon">
+                    <img src="https://stickershop.line-scdn.net/stickershop/v1/sticker/766124919/android/sticker.png" alt="general Icon" style="width: 50px; height: 50px;">
+                </div>
                 <div class="category-title">Would you rather</div>
                 <div class="category-count">224 Questions</div>
             </div>
-
+        </div>
         
         <div class="question-container" id="question-container">
             <div class="question-header">
@@ -1571,7 +1610,7 @@
                 "What’s your ideal way to reconnect after a miscommunication?",
                 "If we ever had to make a couple logo, what symbols or themes would it include?"
             ],
-            friend: [
+            general: [
                 "Would you rather someone confess to liking you too early or never at all? Why?",
                 "Would you rather be completely emotionally understood or wildly desired? Why?",
                 "Would you rather receive a heartfelt letter or a spontaneous forehead kiss? Why?",
@@ -1763,8 +1802,8 @@
                 "Would you rather confess before you're ready or miss the moment completely?",
                 "Would you rather be remembered for the way you stayed or the way you left?",
                 "Would you rather be honest and feared or kind and doubted?",
-                "Would you rather hear ‘I was about to tell you’ or ‘I wish I had said something’?","                
-                "Would you rather they say ‘I never stopped’ or ‘I wish I could again’?","                
+                "Would you rather hear ‘I was about to tell you’ or ‘I wish I had said something’?",
+                "Would you rather they say ‘I never stopped’ or ‘I wish I could again’?",
                 "Would you rather fall asleep during a call or wake up to a message they left?",
                 "Would you rather regret what you never said or what you said too soon?",
                 "Would you rather someone bring you snacks or remember how you like your eggs?",
@@ -1818,10 +1857,10 @@
                 "Would you rather know how they’d describe themselves or how they’d describe you?",
                 "Would you rather go through the old memories or make brand new ones?",
                 "Would you rather be the one to reach out again or be the one they finally reach for?",
-                "Would you rather hear ‘I missed you’ in passing or ‘I kept waiting for the right time’?","                
+                "Would you rather hear ‘I missed you’ in passing or ‘I kept waiting for the right time’?",
                 "Would you rather pick things up mid-conversation or start all over like strangers?",
                 "Would you rather ask ‘did you ever stop caring?’ or ‘were you scared to?’",
-                "Would you rather tell them ‘I hoped you’d come back’ or hear ‘I thought of you often’?","                
+                "Would you rather tell them ‘I hoped you’d come back’ or hear ‘I thought of you often’?",
                 "Would you rather be patient with someone new or familiar with someone changed?",
                 "Would you rather try again with hope or leave it with grace?",
                 "Would you rather say ‘I’m glad we circled back’ or ‘I’m at peace we didn’t’?",
@@ -1845,12 +1884,12 @@
                 "Would you rather say ‘I needed that space’ or ‘I hated the silence’?",
                 "Would you rather ask ‘what are you like in love?’ or ‘how do you handle conflict?’",
                 "Would you rather admit ‘I think about you more than I should’ or hear it first?",
-                "Would you rather say ‘this feels like something’ or hear ‘I don’t want to mess this up’?"," 
-                "Would you rather admit ‘I needed you’ or ‘I learned from you’",
+                "Would you rather say ‘this feels like something’ or hear ‘I don’t want to mess this up’?",
+                "Would you rather admit ‘I needed you’ or ‘I learned from you’?",
                 "Would you rather be remembered by name or by feeling?",
                 "Would you rather take the risk of loving someone or be loved too late?",
                 "Would you rather fall for someone’s presence or their perspective?",
-                "Would you rather hear someone say ‘I still think of you’ or ‘I’m glad you existed’",
+                "Would you rather hear someone say ‘I still think of you’ or ‘I’m glad you existed’?",
                 "Would you rather visit a place that felt like home or a person who did?",
                 "Would you rather love with no label or have a label without clarity?",
                 "Would you rather keep something that hurts or lose something that meant everything?",
@@ -1883,7 +1922,7 @@
             ]
         };
 
-                // Game state
+        // Game state
         let currentCategory = '';
         let currentQuestionIndex = 0;
         let completedQuestions = 0;
@@ -1907,6 +1946,18 @@
         const unlockButtonEl = document.getElementById('unlock-button');
         const passwordErrorEl = document.getElementById('password-error');
         
+        const categoryDisplayTitles = {
+            friend: 'Friendship',
+            couple: 'Talking-stage',
+            general: 'Would you rather'
+        };
+
+        const categoryEndAlerts = {
+            friend: 'friendship',
+            couple: 'love',
+            general: 'Would you rather'
+        };
+
         // Create floating hearts
         function createHearts() {
             const heartsContainer = document.createElement('div');
@@ -1926,9 +1977,7 @@
         
         // Initialize game
         function initGame() {
-            categoriesEl.style.display = 'flex';
-            questionContainerEl.style.display = 'none';
-            lockModalEl.style.display = 'none';
+            showCategories();
             updateProgress();
             createHearts();
         }
@@ -1949,7 +1998,7 @@
             questionContainerEl.style.display = 'block';
             lockModalEl.style.display = 'none';
             
-            currentCategoryEl.textContent = category === 'friend' ? 'Friendship' : 'Love';
+            currentCategoryEl.textContent = categoryDisplayTitles[category] || 'Category';
             displayQuestion();
         }
         
@@ -1971,7 +2020,7 @@
                 displayQuestion();
             } else {
                 // All questions completed for this category
-                alert(`You've completed all ${currentCategory === 'friend' ? 'friendship' : 'love'} questions!`);
+                alert(`You've completed all ${categoryEndAlerts[currentCategory]} questions!`);
                 showCategories();
             }
         }
@@ -2068,10 +2117,11 @@
         // Event listeners
         document.querySelectorAll('.category').forEach(category => {
             category.addEventListener('click', () => {
-                if (category.dataset.category === 'couple') {
+                const categoryType = category.dataset.category;
+                if (categoryType === 'couple') {
                     showLockModal();
-                } else {
-                    showQuestions(category.dataset.category);
+                } else if (questions[categoryType]) {
+                    showQuestions(categoryType);
                 }
             });
         });
