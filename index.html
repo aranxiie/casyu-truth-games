@@ -550,6 +550,11 @@
             }
         }
         
+        /* FIX: Make all elements inside category non-blocking */
+        .category * {
+            pointer-events: none;
+        }
+        
         @media (max-width: 480px) {
             .categories {
                 flex-direction: column;
